@@ -38,9 +38,24 @@ Using the oss-cad-suite:
 ```
 cd <your_project_folder>
 mkdir build
-C:\Users\wolfg\Downloads\oss-cad-suite\bin\yosys.exe -p "synth_ice40 -top top -blif build/uart.blif -json build/uart.json" top.v uart_trx.v
-yosys.exe -p "synth_ice40 -top top -blif build/led.blif -json build/led.json" top.v
+yosys.exe -p "synth_ice40 -top top -blif build/blinky.blif -json build/blinky.json" top.v
 ```
+
+If you want to compile more than one verilog file, just list all files separated by spaces after top.v
+
+If yosys.exe outputs something like
+
+```
+2.50. Executing CHECK pass (checking for obvious problems).
+Checking module top...
+Found and reported 0 problems.
+
+2.51. Executing BLIF backend.
+
+2.52. Executing JSON backend.
+```
+
+then the compilation did work.
 
 ## Perform Place and Route
 
@@ -51,13 +66,13 @@ The output of this stage is an .asc file which is produced by the nextpnr applic
 For IceStick:
 
 ```
-nextpnr-ice40 --hx1k --package tq144 --json hardware.json --asc hardware.asc --pcf icestick.pcf -q
+nextpnr-ice40 --hx1k --package tq144 --json blinky.json --asc blinky.asc --pcf icestick.pcf -q
 ```
 
 For Ice40 UltraPlus 5K eval board:
 
 ```
-nextpnr-ice40 --package sg48 --up5k --json build/led.json --asc build/led.asc --pcf ice40_ultraplus_5k.pcf -q
+nextpnr-ice40 --package sg48 --up5k --json build/blinky.json --asc build/blinky.asc --pcf ice40_ultraplus_5k.pcf -q
 ```
 
 .pcf files are constraint files and are used to define symbols that can be used in the verilog source code and are then mapped to the hardware of the ICE40 chip. Examples are ports that are connected to LEDs or the UART.
@@ -67,7 +82,7 @@ nextpnr-ice40 --package sg48 --up5k --json build/led.json --asc build/led.asc --
 In this stage, the bitstream file .bin is generated which can be used to program the ICE40 UP5K breakout board.
 
 ```
-icepack build/led.asc build/led.bin
+icepack build/blinky.asc build/blinky.bin
 ```
 
 ## Changing the USB driver
@@ -94,6 +109,8 @@ Close Zadig.
 
 ## Flash / Program
 
+Plug in the ICE40 UP5K eval board into your computer via a USB cable that transmits data and not only charge.
+
 ### Program into RAM (This is the fastest method for development and does not grind down the flash)
 
 The instructions for the jumpers are explained on the small sheet of paper that comes with the ICE40 UP5K board.
@@ -105,7 +122,6 @@ horizontal orientation to vertical orientation!
 When the application is programmed to RAM, it is lost after a power cycle.
 
 ```
-iceprog -S build/led.bin
 iceprog -S -d i:0x0403:0x6010:0 build/led.bin
 ```
 
