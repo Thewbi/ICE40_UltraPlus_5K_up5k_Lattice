@@ -5,6 +5,7 @@ module top(/*input [3:0] SW,*/ input clk, output LED_R, output LED_G, output LED
     wire clk_42mhz;
     // assign clk_42mhz = CLK;
 
+    // source: https://github.com/icebreaker-fpga/icebreaker-verilog-examples/blob/main/icebreaker/pll_uart/pll_uart_mirror.v
     SB_PLL40_PAD #(
         .DIVR(4'b0000),
         // 42MHz

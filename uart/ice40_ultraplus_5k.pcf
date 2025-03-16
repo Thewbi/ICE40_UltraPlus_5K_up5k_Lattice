@@ -31,5 +31,30 @@ set_frequency clk 12
 #set_io SPI_MISO 14
 
 # RS232
-set_io -nowarn RX 6
-set_io -nowarn TX 9
+#set_io -nowarn RX 6
+#set_io -nowarn TX 9
+#set_io -nowarn RX 13
+#set_io -nowarn TX 14
+
+#set_io -nowarn RX 15
+#set_io -nowarn TX 14
+#set_io -nowarn spi_cs 16 # Drive high to ensure that the SPI flash is disabled
+
+set_io -nowarn RX 17
+set_io -nowarn TX 14
+set_io -nowarn spi_cs 16 # Drive high to ensure that the SPI flash is disabled
+
+### UART (FTDI Channel B) - https://github.com/alangarf/apple-one/blob/master/boards/upduino/yosys/ice40up5k.pcf
+#set_io RX   12
+#set_io TX   21
+#set_io uart_cts  13
+
+
+### UART (FTDI Channel B) - https://github.com/mcmayer/iCE40/blob/master/ice40hx8k.pcf
+#set_io RS232_RX_i B10
+#set_io RS232_TX_o B12
+#set_io RTSn       B13
+#set_io CTSn       A15
+#set_io DTRn       A16
+#set_io DSRn       B14
+#set_io DCDn       B15
