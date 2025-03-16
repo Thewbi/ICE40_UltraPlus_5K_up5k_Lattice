@@ -50,4 +50,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-blinky/build
+
+# ignore all files in the build folder of all examples
+**/build

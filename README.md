@@ -2,6 +2,24 @@
 
 Examples for the ICE40 UltraPlus 5k (ICE40 UP5K) Breakout Board.
 
+# Links
+
+https://github.com/osresearch/up5k
+https://gojimmypi.github.io/FPGA-Programming-iCE40UP5K-B-EVN/
+
+# Quickstart
+
+```
+cd <your_project_folder>
+mkdir build
+set PATH=%PATH%;C:\Users\wolfg\Downloads\oss-cad-suite\lib\
+C:\Users\wolfg\Downloads\oss-cad-suite\environment.bat
+yosys.exe -p "synth_ice40 -top top -blif build/aout.blif -json build/aout.json" top.v
+nextpnr-ice40 --package sg48 --up5k --json build/aout.json --asc build/aout.asc --pcf ice40_ultraplus_5k.pcf -q
+icepack build/aout.asc build/aout.bin
+iceprog -S -d i:0x0403:0x6010:0 build/aout.bin
+```
+
 # Installing oss-cad-suite on Windows
 
 Install the oss-cad-suite on windows which also contains yosys. Download the latest release of the oss-cad-suite from https://github.com/YosysHQ/oss-cad-suite-build/releases. You will get the file oss-cad-suite-windows-x64-20250315.exe. First unblock the installer (Properties > General > Unblock). Then run the .exe file. It will automatically extract to a folder called oss-cad-suite in the current folder.
@@ -130,7 +148,7 @@ When the application is programmed to SRAM, it is lost after a power cycle.
 iceprog -S -d i:0x0403:0x6010:0 build/led.bin
 ```
 
-The parameter S stands for SRAM since the type of RAM used on the breakout board is SRAM.
+The parameter S stands for SRAM since the type of RAM used on the breakout board is SRAM. See https://github.com/YosysHQ/icestorm/blob/master/iceprog/iceprog.c
 
 ### Program into Flash
 
